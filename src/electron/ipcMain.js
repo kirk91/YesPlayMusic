@@ -221,14 +221,16 @@ export function initIpcMain(win, store, trayEventEmitter) {
         ? parseSourceStringToList(source)
         : ['pyncmd', 'kuwo'];
     log(`[UNM] using source: ${sourceList || '<default>'}`);
+    log(`process.env.FOLLOW_SOURCE_ORDER: ${process.env.FOLLOW_SOURCE_ORDER}`);
 
     try {
-      const matchedAudio = await Promise.race([
-        // TODO: tell users to install yt-dlp.
-        // we passed "null" to source, to let UNM choose the default source.
-        match(track.id, sourceList, track),
-        timeoutPromise,
-      ]);
+      // const matchedAudio = await Promise.race([
+      //   // TODO: tell users to install yt-dlp.
+      //   // we passed "null" to source, to let UNM choose the default source.
+      //   match(track.id, sourceList, track),
+      //   timeoutPromise,
+      // ]);
+      const matchedAudio = await match(track.id, sourceList, track);
 
       if (!matchedAudio || !matchedAudio.url) {
         throw new Error('no such a song found');
