@@ -217,7 +217,9 @@ export function initIpcMain(win, store, trayEventEmitter) {
     });
 
     const sourceList =
-      typeof source === 'string' ? parseSourceStringToList(source) : ['pyncmd', 'kuwo'];
+      typeof source === 'string'
+        ? parseSourceStringToList(source)
+        : ['pyncmd', 'kuwo'];
     log(`[UNM] using source: ${sourceList || '<default>'}`);
 
     try {
@@ -244,7 +246,6 @@ export function initIpcMain(win, store, trayEventEmitter) {
       return null;
     }
   });
-
 
   ipcMain.on('close', e => {
     if (isMac) {
