@@ -221,7 +221,9 @@ export function initIpcMain(win, store, trayEventEmitter) {
         ? parseSourceStringToList(source)
         : ['pyncmd', 'kuwo'];
     log(`[UNM] using source: ${sourceList || '<default>'}`);
-    log(`process.env.FOLLOW_SOURCE_ORDER: ${process.env.FOLLOW_SOURCE_ORDER}`);
+
+    process.env.ENABLE_LOCAL_VIP = 'true';
+    process.env.FOLLOW_SOURCE_ORDER = 'true';
 
     try {
       // const matchedAudio = await Promise.race([
