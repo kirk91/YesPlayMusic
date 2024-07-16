@@ -1,11 +1,16 @@
 import { app, dialog, globalShortcut, ipcMain } from 'electron';
 // import UNM from '@unblockneteasemusic/rust-napi';
-import match from '@unblockneteasemusic/server';
 import { registerGlobalShortcut } from '@/electron/globalShortcut';
 import cloneDeep from 'lodash/cloneDeep';
 import shortcuts from '@/utils/shortcuts';
 import { createMenu } from './menu';
 import { isCreateTray, isMac } from '@/utils/platform';
+
+// set unm env, `ENABLE_FLAC` must be set before import
+process.env.ENABLE_LOCAL_VIP = 'true';
+process.env.FOLLOW_SOURCE_ORDER = 'true';
+process.env.ENABLE_FLAC = 'true';
+const match = require('@unblockneteasemusic/server');
 
 const clc = require('cli-color');
 const log = text => {
@@ -221,9 +226,6 @@ export function initIpcMain(win, store, trayEventEmitter) {
         ? parseSourceStringToList(source)
         : ['pyncmd', 'kuwo'];
     log(`[UNM] using source: ${sourceList || '<default>'}`);
-
-    process.env.ENABLE_LOCAL_VIP = 'true';
-    process.env.FOLLOW_SOURCE_ORDER = 'true';
 
     try {
       // const matchedAudio = await Promise.race([
